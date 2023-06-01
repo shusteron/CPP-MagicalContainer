@@ -25,7 +25,7 @@ public:
     class AscendingIterator {
         private:
             MagicalContainer& container;
-            int index;
+            size_t index;
 
         public:
             AscendingIterator(MagicalContainer& cont);
@@ -53,7 +53,7 @@ public:
             }
 
             AscendingIterator end() {
-                return AscendingIterator(this->container, container.size());
+                return *this;
             }
     };
 
@@ -63,10 +63,10 @@ public:
     class SideCrossIterator {
     private:
         MagicalContainer& container;
-        int index;
+        size_t index;
 
     public:
-        SideCrossIterator(MagicalContainer& cont, int index) : container(cont), index(index) {}
+        SideCrossIterator(MagicalContainer& cont);
 
         // copy constructor
         SideCrossIterator(const SideCrossIterator &other) = default;
@@ -85,23 +85,24 @@ public:
         bool operator<(const SideCrossIterator& other) const;
 
         int operator*() const;
+
+        SideCrossIterator begin() {
+            return *this;
+        }
+
+        SideCrossIterator end() {
+            return *this;
+        }
     };
 
-    SideCrossIterator begin() {
-        return SideCrossIterator(*this, 0);
-    }
-
-    SideCrossIterator end() {
-        return SideCrossIterator(*this, elements.size());
-    }
 
     class PrimeIterator{
         private:
             MagicalContainer& container;
-            int index;
+            size_t index;
 
         public:
-            PrimeIterator(MagicalContainer& cont, int index) : container(cont), index(index) {}
+            PrimeIterator(MagicalContainer& cont);
 
             // copy constructor
             PrimeIterator(const PrimeIterator &other) = default;
@@ -123,11 +124,11 @@ public:
             int operator*() const;
 
             PrimeIterator begin() {
-                return PrimeIterator(*this, 0);
+                return *this;
             }
 
             PrimeIterator end() {
-                return PrimeIterator(*this, elements.size());
+                return *this;
             }
 
     };
