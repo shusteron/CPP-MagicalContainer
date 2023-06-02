@@ -29,12 +29,18 @@ public:
 
         public:
             AscendingIterator(MagicalContainer& cont);
+            AscendingIterator(MagicalContainer &container,size_t index);
 
+            // --------- TO PASS TIDY --------
             // Copy constructor.
             AscendingIterator(const AscendingIterator &other) = default;
-
             // Destructor.
             ~AscendingIterator() = default;
+            // Move constructor.
+            AscendingIterator(AscendingIterator&& other) = delete; 
+            // Assigment operator.
+            AscendingIterator& operator=(AscendingIterator&& other)noexcept;
+            AscendingIterator& operator=(const AscendingIterator& other);
 
             AscendingIterator& operator++();
 
@@ -68,11 +74,16 @@ public:
     public:
         SideCrossIterator(MagicalContainer& cont);
 
-        // copy constructor
+        // --------- TO PASS TIDY --------
+        // Copy constructor.
         SideCrossIterator(const SideCrossIterator &other) = default;
-
-        // destructor
+        // Destructor.
         ~SideCrossIterator() = default;
+        // Move constructor.
+        SideCrossIterator(SideCrossIterator&& other) = delete; 
+        // Assigment operator.
+        SideCrossIterator& operator=(SideCrossIterator&& other) noexcept;
+        SideCrossIterator& operator=(const SideCrossIterator& other);
 
         SideCrossIterator& operator++();
 
@@ -104,12 +115,16 @@ public:
         public:
             PrimeIterator(MagicalContainer& cont);
 
+            // --------- TO PASS TIDY --------
             // copy constructor
             PrimeIterator(const PrimeIterator &other) = default;
-
             // destructor
             ~PrimeIterator() = default;
-
+            // Move
+            PrimeIterator(PrimeIterator&& other) = delete;   
+            // Assigment
+            PrimeIterator& operator=(PrimeIterator&& other)noexcept;
+            PrimeIterator& operator=(const PrimeIterator& other);
 
             PrimeIterator& operator++();
 

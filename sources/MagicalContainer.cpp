@@ -20,7 +20,32 @@ int MagicalContainer::size() {
 
 // ------------------------- AscendingIterator -------------------------
 // Constructor.
-MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer& cont) : container(cont) {}
+MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer& cont) : container(cont),index(0) {}
+
+MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &container,size_t index) :container(container),index(index){}
+
+// Assigment 
+MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator=(const MagicalContainer::AscendingIterator &other) {
+    if (this != &other)
+    {
+        if (&container != &other.container)
+        {
+            throw std::runtime_error("Iterators from different containers cannot be assinged");
+        }
+
+        index = other.index;
+    }
+
+    return *this;
+}
+
+MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator=(MagicalContainer::AscendingIterator &&other) noexcept {
+    if (this != &other) {
+        container = other.container;
+        index = other.index;
+    }
+    return *this;
+}
 
 // ------------------------- Operators -------------------------
 
@@ -37,12 +62,22 @@ bool MagicalContainer::AscendingIterator::operator>(const AscendingIterator& oth
 
 bool MagicalContainer::AscendingIterator::operator<(const AscendingIterator& other) const { return container.elements[index] < container.elements[other.index]; }
 
-int MagicalContainer::AscendingIterator::operator*() const { return container.elements[index]; }
+int MagicalContainer::AscendingIterator::operator*() const { return container.elements.at(index); }
 
-// ------------------------- SideCrossIterator -------------------------
+// ***********************************************
+//              SideCrossIterator
+// ***********************************************
 // Constuctor.
 MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer& cont) : container(cont) {}
 
+
+// Assigment operator.
+MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator=(const MagicalContainer::SideCrossIterator &other) {
+    return *this;
+}
+MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator=(MagicalContainer::SideCrossIterator &&other)noexcept {
+    return *this;
+}
 
 // ------------------------- Operators -------------------------
 
@@ -64,7 +99,24 @@ int MagicalContainer::SideCrossIterator::operator*() const { return container.el
 // ------------------------- PrimeIterator -------------------------
 // Constuctor.
 MagicalContainer::PrimeIterator::PrimeIterator(MagicalContainer& cont) : container(cont) {}
+// Assigment
+MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator=(const MagicalContainer::PrimeIterator &other) {
+    if (this != &other)
+    {
+        if (&container != &other.container){throw std::runtime_error("Iterators from different containers cannot be assinged");}
 
+        index = other.index;
+    }
+    return *this;
+}
+
+MagicalContainer::PrimeIterator& MagicalContainer::PrimeIterator::operator=(MagicalContainer::PrimeIterator&& other) noexcept {
+    if (this != &other) {
+        container = other.container;
+        index = other.index;
+    }
+    return *this;
+}
 
 // ------------------------- Operators -------------------------
 
