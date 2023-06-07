@@ -13,6 +13,8 @@ namespace ariel{}
 class MagicalContainer {
 private:
     std::vector<int> elements;
+    std::vector<int*> primes;
+    bool isPrime(int num);
 
 public:
     void addElement(int element);
@@ -59,7 +61,8 @@ public:
             }
 
             AscendingIterator end() {
-                return *this;
+                
+                return MagicalContainer::AscendingIterator(this->container,  static_cast<size_t>(this->container.size())); 
             }
     };
 
@@ -114,6 +117,7 @@ public:
 
         public:
             PrimeIterator(MagicalContainer& cont);
+            PrimeIterator(MagicalContainer &container,size_t index);
 
             // --------- TO PASS TIDY --------
             // copy constructor
@@ -139,11 +143,11 @@ public:
             int operator*() const;
 
             PrimeIterator begin() {
-                return *this;
+                return PrimeIterator(this->container,0);
             }
 
             PrimeIterator end() {
-                return *this;
+                return PrimeIterator(this->container, this->container.primes.size());
             }
 
     };
