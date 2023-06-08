@@ -6,11 +6,17 @@ using namespace std;
 
 
 void MagicalContainer::addElement(int element){
+    // If element is prime insert him in the primes vector to.
+    auto elemnt_address = new int(element);
+
     if(isPrime(element)){
-        auto elemnt_address = new int(element);
         primes.emplace_back(elemnt_address);
         sort(primes.begin(), primes.end(), [](const int* a, const int* b) { return *a < *b; });
     }
+    // Insert element in sorted vector, then sort.
+    this->sorted.emplace_back(elemnt_address);
+    sort(sorted.begin(), sorted.end(), [](const int* a, const int* b) { return *a < *b; });
+
     this->elements.emplace_back(element);
 }
 
@@ -19,12 +25,13 @@ void MagicalContainer::removeElement(int element){
         if(*elem == element){
             delete elem;
         }
-        // primes.erase(remove(primes.begin(), primes.end(), element), primes.end());
+        auto iterator = std::find(primes.begin(), primes.end(), elem);
+        primes.erase(iterator);
     }
     elements.erase(remove(elements.begin(), elements.end(), element), elements.end());
 }
 
-int MagicalContainer::size() {
+size_t MagicalContainer::size() const {
     return elements.size();
 }
 
@@ -75,9 +82,11 @@ MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operat
 // --------------------- Operators ---------------------
 
 MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator++() {
-    index++;
-    if(index > container.size())
-        throw runtime_error(" Index out of bounds");
+    cout << "++"<<endl;
+
+    if(this->index > container.size())
+        throw runtime_error("Index out of bounds");
+    ++this->index;
     return *this;
 }
 
@@ -89,7 +98,22 @@ bool MagicalContainer::AscendingIterator::operator>(const AscendingIterator& oth
 
 bool MagicalContainer::AscendingIterator::operator<(const AscendingIterator& other) const { return container.elements.at(index) < container.elements.at(other.index); }
 
-int MagicalContainer::AscendingIterator::operator*() const { return container.elements.at(index); }
+int MagicalContainer::AscendingIterator::operator*() const {
+    cout << "*"<<endl;
+    if(this->index > container.size())
+        throw runtime_error("Index out of bounds");
+    return *(container.sorted.at(this->index));
+}
+
+MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin() const{
+    std::cout << "begin"<<std::endl;
+    return MagicalContainer::AscendingIterator(this->container,0);
+}
+
+MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() const {
+    std::cout << "end"<<std::endl;
+    return MagicalContainer::AscendingIterator(this->container,(this->container.size()));
+}
 
 // ********************************************************************************************************
 //              SideCrossIterator
@@ -109,6 +133,10 @@ MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operat
 // --------------------- Operators ---------------------
 
 MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator++() {
+  if (this->index == (this->container.size())){
+        throw std::runtime_error("Index out of bounds.");
+    }
+    ++ this->index;
     return *this;
 }
 

@@ -13,6 +13,7 @@ namespace ariel{}
 class MagicalContainer {
 private:
     std::vector<int> elements;
+    std::vector<int*> sorted;
     std::vector<int*> primes;
     bool isPrime(int num);
 
@@ -21,7 +22,7 @@ public:
 
     void removeElement(int element);
 
-    int size();
+    size_t size() const;
 
     // ------------------------------------------------------- AscendingIterator -------------------------------------------------------
     class AscendingIterator {
@@ -56,14 +57,9 @@ public:
 
             int operator*() const;
 
-            AscendingIterator begin() {
-                return AscendingIterator(*this);
-            }
+            AscendingIterator begin()const;
 
-            AscendingIterator end() {
-                
-                return MagicalContainer::AscendingIterator(this->container,  static_cast<size_t>(this->container.size())); 
-            }
+            AscendingIterator end()const;
     };
 
    
