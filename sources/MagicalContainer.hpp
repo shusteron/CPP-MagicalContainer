@@ -19,10 +19,10 @@ private:
 
 public:
     void addElement(int element);
-
     void removeElement(int element);
-
     size_t size() const;
+
+
 
     // ------------------------------------------------------- AscendingIterator -------------------------------------------------------
     class AscendingIterator {
@@ -72,6 +72,8 @@ public:
 
     public:
         SideCrossIterator(MagicalContainer& cont);
+        SideCrossIterator(MagicalContainer& cont, size_t index);
+
 
         // --------- TO PASS TIDY --------
         // Copy constructor.
@@ -97,11 +99,11 @@ public:
         int operator*() const;
 
         SideCrossIterator begin() {
-            return *this;
+            return SideCrossIterator{container};
         }
 
         SideCrossIterator end() {
-            return *this;
+            return SideCrossIterator{container, container.elements.size()};
         }
     };
 
